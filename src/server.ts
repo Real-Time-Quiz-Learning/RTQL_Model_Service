@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { generateQuestions } from './services/questionify';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -31,5 +32,5 @@ app.post('/api/questions', async (req: Request, res:Response) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`server running on port ${PORT}`);
+    console.log(`http server on ${PORT}`);
 });
