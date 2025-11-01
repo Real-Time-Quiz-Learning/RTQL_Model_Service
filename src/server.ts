@@ -19,7 +19,7 @@ app.get('/', (req: Request, res: Response) => {
     });
 });
 
-app.post('/api/questions', async (req: Request, res:Response) => {
+app.post('/questions', async (req: Request, res:Response) => {
     try {
         const { input, questions } = req.body;
 
