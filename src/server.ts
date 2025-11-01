@@ -12,6 +12,13 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req: Request, res: Response) => {
+    res.json({
+        service: 'RTQL model service',
+        status: 'running'
+    });
+});
+
 app.post('/api/questions', async (req: Request, res:Response) => {
     try {
         const { input, questions } = req.body;
