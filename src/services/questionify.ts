@@ -30,14 +30,14 @@ export async function generateQuestions(
     ]    
 }
 
-The questions should be about the topic from the input below, not the actual input. 
+The questions should be about the topic from the input below, not the actual input. The correct answer does not have to be 0.
 ===INPUT===
 ${input}`;
 
     const result = await client.chat.completions.create({
         model: 'deepseek-chat',
         messages: [{ role: 'user', content: prompt }],
-        temperature: 0.3
+        temperature: 0.0
     });
 
     const response = result.choices[0].message.content;
