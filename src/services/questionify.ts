@@ -31,7 +31,7 @@ export async function generateQuestions(
 }
     
 IMPORTANT: Return ONLY the raw JSON object. Do not wrap it in markdown code blocks. Do not include backticks, "json" labels, or any other formatting.
-The questions should be about the topic from the input below, not the actual input. The correct answer does not have to be 0.
+The questions should be about the topic from the input below, not the actual input. If there are multiple quesions, try to make sure the correct answer is not the same option for all of them.
 ===INPUT===
 ${input}`;
 
