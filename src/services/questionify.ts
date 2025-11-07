@@ -29,9 +29,9 @@ export async function generateQuestions(
         }
     ]    
 }
-    
-IMPORTANT: Return ONLY the raw JSON object. Do not wrap it in markdown code blocks. Do not include backticks, "json" labels, or any other formatting.
-The questions should be about the topic from the input below, not the actual input. If there are multiple quesions, try to make sure the correct answer is not the same option for all of them.
+RESPONSE REQUIREMENTS:
+- return only the raw JSON object, do not wrap it in markdown code blocks, backticks, labels, or any other formatting.
+- distribute correct answers across all option positions (0, 1, 2, 3). if 5 questions are requested, they should not all have the same correct index.
 ===INPUT===
 ${input}`;
 
