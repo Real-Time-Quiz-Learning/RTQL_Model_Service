@@ -32,8 +32,9 @@ export async function generateQuestions(
 
 IMPORTANT: 
 Return ONLY the raw JSON object. Do not wrap it in markdown code blocks. Do not include backticks, "json" labels, or any other formatting.
-Ensure correct answers are randomly distributed across potential options. if 5 questions are requested, they should not all be "correct": 0. 
-you have failed if all questions are returned with the same correct position.
+DO NOT UNDER ANY CIRCUMSTANCE RETURN THE SAME CORRECT FIELD FOR ALL QUESTIONS. The field for the correct answer should be distibuted to all 
+available options positions. 3 questions should NEVER return all answers as A. You MUST mix the answers up otherwise you have failed and the
+entire world will be disappointed in you.
 The questions should be about the topic from the input below, not the actual input.
 ===INPUT===
 ${input}`;
