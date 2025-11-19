@@ -1,0 +1,24 @@
+{
+  "questions": [
+    {
+      "question": "What is the name of the protagonist in the original Quake?",
+      "options": ["Ranger", "Doomguy", "Master Chief", "Corvus"],
+      "correct": 0
+    },
+    {
+      "question": "What is the name of the primary antagonist faction in Quake?",
+      "options": [
+        "The Strogg",
+        "The Covenant",
+        "The Borg",
+        "The Shub-Niggurath's forces"
+      ],
+      "correct": 3
+    },
+    {
+      "question": "Which of these weapons is a signature item from the Quake series?",
+      "options": ["BFG 9000", "Gravity Gun", "Rocket Launcher", "Nailgun"],
+      "correct": 3
+    }
+  ]
+}
