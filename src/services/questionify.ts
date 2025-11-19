@@ -19,8 +19,7 @@ export async function generateQuestions(
     input: string,
     questions: number
 ): Promise<MCQuestion[]> {
-    const prompt = `You must abide by the rules listed under the ===IMPORATANT=== heading.
-    Using the text following the ===INPUT=== heading below generate ${questions} multiple choice questions in valid JSON in this exact format with no other text:
+    const prompt = `Using the text following the ===INPUT=== heading below generate ${questions} multiple choice questions in valid JSON in this format:
 {
     "questions": [
         {
@@ -30,9 +29,10 @@ export async function generateQuestions(
         }
     ]    
 }
-===IMPORTANT===
-The "correct" field should change with each response. It should always be random which option is the correct option. If the same question is submitted multiple times,
-randomize which option is the correct one. If multiple questions are requested, ensure that there is a random distribution of which options are correct.
+
+The "correct" field should not always be 0, that is just an example. Each question should have a random option be correct. If correct is always 0 then it defeats
+the entire purpose of the application. Each question should have a random option be correct. Ensure that the "correct" answer is randomized and NOT always defaulting
+to 0. There is nothing more important than this.
 ===INPUT===
 ${input}`;
 
