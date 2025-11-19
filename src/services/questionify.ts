@@ -19,7 +19,8 @@ export async function generateQuestions(
     input: string,
     questions: number
 ): Promise<MCQuestion[]> {
-    const prompt = `Using the text following the ===INPUT=== heading below generate ${questions} multiple choice questions in valid JSON in this exact format with no other text:
+    const prompt = `You must abide by the rules listed under the ===IMPORATANT=== heading.
+    Using the text following the ===INPUT=== heading below generate ${questions} multiple choice questions in valid JSON in this exact format with no other text:
 {
     "questions": [
         {
@@ -29,14 +30,9 @@ export async function generateQuestions(
         }
     ]    
 }
-
-IMPORTANT: 
-Return ONLY the raw JSON object. Do not wrap it in markdown code blocks. Do not include backticks, "json" labels, or any other formatting.
-Format the questions such that the correct field is randomy chosen from A, B, C, or D. If the same question is sent multiple times, it should
-be random which field holds the correct answer. If there are multiple questions requested, it should never return all of the questions with the
-same field as correct. This is the most important aspect of this application. If all answers are A, it is too easy. We MUST make sure the correct fields
-are randomized.
-The questions should be about the topic from the input below, not the actual input.
+===IMPORTANT===
+The "correct" field should change with each response. It should always be random which option is the correct option. If the same question is submitted multiple times,
+randomize which option is the correct one. If multiple questions are requested, ensure that there is a random distribution of which options are correct.
 ===INPUT===
 ${input}`;
 
