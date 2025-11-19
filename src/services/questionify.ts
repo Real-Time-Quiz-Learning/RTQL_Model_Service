@@ -32,9 +32,10 @@ export async function generateQuestions(
 
 IMPORTANT: 
 Return ONLY the raw JSON object. Do not wrap it in markdown code blocks. Do not include backticks, "json" labels, or any other formatting.
-DO NOT UNDER ANY CIRCUMSTANCE RETURN THE SAME CORRECT FIELD FOR ALL QUESTIONS. The field for the correct answer should be distibuted to all 
-available options positions. 3 questions should NEVER return all answers as A. You MUST mix the answers up otherwise you have failed and the
-entire world will be disappointed in you.
+Format the questions such that the correct field is randomy chosen from A, B, C, or D. If the same question is sent multiple times, it should
+be random which field holds the correct answer. If there are multiple questions requested, it should never return all of the questions with the
+same field as correct. This is the most important aspect of this application. If all answers are A, it is too easy. We MUST make sure the correct fields
+are randomized.
 The questions should be about the topic from the input below, not the actual input.
 ===INPUT===
 ${input}`;
@@ -42,7 +43,7 @@ ${input}`;
     const result = await client.chat.completions.create({
         model: 'deepseek-chat',
         messages: [{ role: 'user', content: prompt }],
-        temperature: 0.0
+        temperature: 6.0
     });
 
     const response = result.choices[0].message.content;
