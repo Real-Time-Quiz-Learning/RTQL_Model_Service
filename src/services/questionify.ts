@@ -24,8 +24,8 @@ export async function generateQuestions(
     questions for the "question" field and provide 1 correct option and 3 incorrect options. Which option is correct should be random. If there is a 
     single question requested, the correct field should be 0, 1, 2, or 3. Not just 0. If there are multiple questions requested, the correct field should
     be random for EACH question. So we should expect if 4 questions are requested that one will have "correct": 1, another "correct": 2, etc. This is very
-    important as the application is useless if all the answers are always 0. Ensure the questions are varied. We should not be asking "what is the primary 
-    purpose of the thing" as the default question, mix it up.
+    important as the application is useless if all the answers are always 0. One question format is prohibitied. You must not ask "What is the primary purpose
+    of _____", this question is no good.
 {
     "questions": [
         {
