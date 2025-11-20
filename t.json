@@ -1,24 +1,29 @@
 {
   "questions": [
     {
-      "question": "What is the name of the protagonist in the original Quake?",
-      "options": ["Ranger", "Doomguy", "Master Chief", "Corvus"],
+      "question": "What is the primary purpose of a Promise in JavaScript?",
+      "options": [
+        "To handle asynchronous operations and their eventual completion or failure",
+        "To declare variables with block scope",
+        "To create new HTML elements dynamically",
+        "To perform mathematical calculations with high precision"
+      ],
       "correct": 0
     },
     {
-      "question": "What is the name of the primary antagonist faction in Quake?",
-      "options": [
-        "The Strogg",
-        "The Covenant",
-        "The Borg",
-        "The Shub-Niggurath's forces"
-      ],
-      "correct": 3
+      "question": "Which method is called on a Promise when you want to handle a successfully resolved value?",
+      "options": [".then()", ".catch()", ".finally()", ".resolve()"],
+      "correct": 0
     },
     {
-      "question": "Which of these weapons is a signature item from the Quake series?",
-      "options": ["BFG 9000", "Gravity Gun", "Rocket Launcher", "Nailgun"],
-      "correct": 3
+      "question": "What does the .catch() method handle in a Promise chain?",
+      "options": [
+        "Rejected promises and thrown errors",
+        "Only network connection errors",
+        "The final result after both success and failure",
+        "Synchronous code execution errors"
+      ],
+      "correct": 0
     }
   ]
 }
