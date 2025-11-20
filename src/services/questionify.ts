@@ -20,12 +20,12 @@ export async function generateQuestions(
     questions: number
 ): Promise<MCQuestion[]> {
     const prompt = `You will generate ${questions} questions based on the input below the ===INPUT=== heading below. The response of the questions should be in the 
-    format of the json below, but the json is just a template. The format is important, but the content should change. Interpret the input to determine
+    format of the json below, but the json is just a template. The format is important, but the content should change. You should never return a question that is
+    "What is the primary purpose of ______", this question is prohibited, NEVER make this one of the questions. Interpret the input to determine
     questions for the "question" field and provide 1 correct option and 3 incorrect options. Which option is correct should be random. If there is a 
     single question requested, the correct field should be 0, 1, 2, or 3. Not just 0. If there are multiple questions requested, the correct field should
     be random for EACH question. So we should expect if 4 questions are requested that one will have "correct": 1, another "correct": 2, etc. This is very
-    important as the application is useless if all the answers are always 0. One question format is prohibitied. You must not ask "What is the primary purpose
-    of _____", this question is no good.
+    important as the application is useless if all the answers are always 0. 
 {
     "questions": [
         {
