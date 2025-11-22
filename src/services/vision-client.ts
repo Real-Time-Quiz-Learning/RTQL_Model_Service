@@ -49,7 +49,7 @@ export class VisionClient {
                     stream: false
                 },
                 {
-                    timeout: 60000
+                    timeout: 600000
                 }
             );
 
