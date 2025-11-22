@@ -24,6 +24,8 @@ export async function generateQuestions(
     ===RULES===
     Generate ${questions} questions based on the input below the INPUT heading blow.
     The response of the questions must be in the exact same JSON structure as the example beneath the FORMAT heading with now other formatting applied.
+    Do not wrap the response in markdown code blocks (backticks)
+    Do not apply ANY formatting to the response beyond what you see beneath the FORMAT heading.
     It is prohibited to make a questions with the phrasing "What is the primary purpose of _____", never make a questions like this.
     The correct field should be random for each question. More often than not, we expect different questions to have different options as the correct option.
     ===FORMAT===
