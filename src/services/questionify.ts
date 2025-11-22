@@ -1,16 +1,11 @@
 import OpenAI from 'openai';
+import axios from 'axios';
 import dotenv from 'dotenv';
-import { VisionClient } from './vision-client';
 
 dotenv.config();
 
-const key = process.env.OPENAI_API_KEY;
-const client = new OpenAI({
-    apiKey: key,
-    baseURL: 'https://api.deepseek.com'
-});
-
-const visionClient = new VisionClient();
+const OLLAMA_URL = process.env.OLLAMA_URL || 'http://127.0.0.1:11434';
+const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'qwen3-vl:8b';
 
 export interface MCQuestion {
     question: string;
@@ -22,39 +17,55 @@ export async function generateQuestions(
     input: string,
     questions: number
 ): Promise<MCQuestion[]> {
-    const prompt = `You will generate ${questions} questions based on the input below the ===INPUT=== heading below. The response of the questions should be in the 
-    format of the json below, but the json is just a template. The format is important, but the content should change. You should never return a question that is
-    "What is the primary purpose of ______", this question is prohibited, NEVER make this one of the questions. Interpret the input to determine
-    questions for the "question" field and provide 1 correct option and 3 incorrect options. Which option is correct should be random. If there is a 
-    single question requested, the correct field should be 0, 1, 2, or 3. Not just 0. If there are multiple questions requested, the correct field should
-    be random for EACH question. So we should expect if 4 questions are requested that one will have "correct": 1, another "correct": 2, etc. This is very
-    important as the application is useless if all the answers are always 0. 
+    const startTime = Date.now();
+    
+    const prompt = `Generate ${questions} multiple choice questions based on the text below.
+
+You must respond ONLY with valid JSON in this exact format:
 {
     "questions": [
         {
             "question": "Question text?",
-            "options": ["A", "B", "C", "D"],
+            "options": ["Option text without prefixes", "Another option", "Third option", "Fourth option"],
             "correct": 0
         }
-    ]    
+    ]
 }
 
-===INPUT===
+CRITICAL Rules:
+- Do NOT prefix options with "A)", "B)", "C)", "D)" or any letters/numbers
+- Options must be plain text only
+- Never ask "What is the primary purpose of ___"
+- Randomize which option is correct (0, 1, 2, or 3)
+- Each question should have different correct positions
+- Return ONLY the JSON, no markdown, no code blocks, no explanation
+
+===INPUT TEXT===
 ${input}`;
 
-    const result = await client.chat.completions.create({
-        model: 'deepseek-chat',
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.0
-    });
+    const response = await axios.post(
+        `${OLLAMA_URL}/api/generate`,
+        {
+            model: OLLAMA_MODEL,
+            prompt: prompt,
+            stream: false
+        },
+        {
+            timeout: 600000
+        }
+    );
 
-    const response = result.choices[0].message.content;
-    if(!response)
-    {
-        throw new Error('No response from deepseek');
+    const processingTime = Date.now() - startTime;
+    console.log(`Generated questions from text in ${processingTime}ms using ${OLLAMA_MODEL}`);
+
+    let cleanedResponse = response.data.response.trim();
+    if (cleanedResponse.startsWith('```json')) {
+        cleanedResponse = cleanedResponse.replace(/^```json\s*/, '').replace(/```\s*$/, '');
+    } else if (cleanedResponse.startsWith('```')) {
+        cleanedResponse = cleanedResponse.replace(/^```\s*/, '').replace(/```\s*$/, '');
     }
 
-    const parsed = JSON.parse(response);
+    const parsed = JSON.parse(cleanedResponse);
     return parsed.questions;
 }
 
@@ -62,13 +73,53 @@ export async function generateQuestionsFromImage(
     imageBuffer: Buffer,
     questions: number
 ): Promise<MCQuestion[]> {
-    const visionResult = await visionClient.extractImage(imageBuffer);
+    const startTime = Date.now();
+    const base64Image = imageBuffer.toString('base64');
 
-    if (!visionResult.text || visionResult.text.trim().length < 20) {
-        throw new Error('nothing meaningful to extract');
+    const prompt = `Analyze this image and generate ${questions} multiple choice questions based on the content.
+
+You must respond ONLY with valid JSON in this exact format:
+{
+    "questions": [
+        {
+            "question": "Question text?",
+            "options": ["Option text without prefixes", "Another option", "Third option", "Fourth option"],
+            "correct": 0
+        }
+    ]
+}
+
+CRITICAL Rules:
+- Do NOT prefix options with "A)", "B)", "C)", "D)" or any letters/numbers
+- Options must be plain text only
+- Never ask "What is the primary purpose of ___"
+- Randomize which option is correct (0, 1, 2, or 3)
+- Each question should have different correct positions
+- Return ONLY the JSON, no markdown, no code blocks, no explanation`;
+
+    const response = await axios.post(
+        `${OLLAMA_URL}/api/generate`,
+        {
+            model: OLLAMA_MODEL,
+            prompt: prompt,
+            images: [base64Image],
+            stream: false
+        },
+        {
+            timeout: 600000
+        }
+    );
+
+    const processingTime = Date.now() - startTime;
+    console.log(`Generated questions in ${processingTime}ms using ${OLLAMA_MODEL}`);
+
+    let cleanedResponse = response.data.response.trim();
+    if (cleanedResponse.startsWith('```json')) {
+        cleanedResponse = cleanedResponse.replace(/^```json\s*/, '').replace(/```\s*$/, '');
+    } else if (cleanedResponse.startsWith('```')) {
+        cleanedResponse = cleanedResponse.replace(/^```\s*/, '').replace(/```\s*$/, '');
     }
 
-    console.log(`extracted ${visionResult.text.length} chars in ${visionResult.processingTimeMs}ms`);
-
-    return generateQuestions(visionResult.text, questions);
+    const parsed = JSON.parse(cleanedResponse);
+    return parsed.questions;
 }

@@ -40,6 +40,7 @@ app.post('/questions', upload.single('image'), async (req: Request, res: Respons
             if (typeof input !== 'string') {
                 return res.status(400).send('input must be a string');
             }
+            console.log('Processing text request');
             const result = await generateQuestions(input, questions);
             return res.json({ questions: result });
         } 

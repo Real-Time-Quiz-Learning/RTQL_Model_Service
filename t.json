@@ -1,29 +1,29 @@
 {
   "questions": [
     {
-      "question": "What is the primary purpose of a Promise in JavaScript?",
+      "question": "Which video game titles feature the Strogg race?",
       "options": [
-        "To handle asynchronous operations and their eventual completion or failure",
-        "To declare variables with block scope",
-        "To create new HTML elements dynamically",
-        "To perform mathematical calculations with high precision"
+        "Quake 2, Quake 4 and Enemy Territory: Quake Wars",
+        "Quake 2, Quake 3 and Enemy Territory: Quake Wars",
+        "Quake 3, Quake 4 and Quake: Enemy Territory",
+        "Quake 2, Quake 4 and Quake: Enemy Territory"
       ],
       "correct": 0
     },
     {
-      "question": "Which method is called on a Promise when you want to handle a successfully resolved value?",
-      "options": [".then()", ".catch()", ".finally()", ".resolve()"],
-      "correct": 0
+      "question": "What is Peeker described as in the Strogg context?",
+      "options": [
+        "Strogg's leader",
+        "Oppressor unit",
+        "recon drone",
+        "neurocyte"
+      ],
+      "correct": 2
     },
     {
-      "question": "What does the .catch() method handle in a Promise chain?",
-      "options": [
-        "Rejected promises and thrown errors",
-        "Only network connection errors",
-        "The final result after both success and failure",
-        "Synchronous code execution errors"
-      ],
-      "correct": 0
+      "question": "What is the most important substance for the Strogg according to the text?",
+      "options": ["Neurocyte", "Stroyent", "Makron", "Peeker"],
+      "correct": 1
     }
   ]
 }
