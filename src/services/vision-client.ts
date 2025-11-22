@@ -62,11 +62,15 @@ export class VisionClient {
             };
         } catch (error: any)
         {
+            console.error('Vision extraction error:', error);
+            console.error('Error code:', error.code);
+            console.error('Error response:', error.response?.data);
+            
             if (error.code === 'ECONNREFUSED')
             {
                 throw new Error('ollama not running');
             }
-            if (error.code === 'ETIMEDOUT')
+            if (error.code === 'ETIMEDOUT' || error.code === 'ECONNABORTED')
             {
                 throw new Error('image processing timed out');
             }
