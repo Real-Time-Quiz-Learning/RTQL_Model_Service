@@ -48,6 +48,11 @@ ${input}`;
         throw new Error('No response from deepseek');
     }
 
-    const parsed = JSON.parse(response);
+    let cleanedResponse = response.trim();
+    if (cleanedResponse.startsWith('```')) {
+        cleanedResponse = cleanedResponse.replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```\s*$/, '');
+    }
+
+    const parsed = JSON.parse(cleanedResponse);
     return parsed.questions;
 }
