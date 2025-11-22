@@ -1,29 +1,44 @@
 {
   "questions": [
     {
-      "question": "Which video game titles feature the Strogg race?",
+      "question": "Which game features the Strogg race?",
       "options": [
-        "Quake 2, Quake 4 and Enemy Territory: Quake Wars",
-        "Quake 2, Quake 3 and Enemy Territory: Quake Wars",
-        "Quake 3, Quake 4 and Quake: Enemy Territory",
-        "Quake 2, Quake 4 and Quake: Enemy Territory"
+        "Quake 2",
+        "Quake 4",
+        "Enemy Territory: Quake Wars",
+        "Quake 1"
       ],
       "correct": 0
     },
     {
-      "question": "What is Peeker described as in the Strogg context?",
+      "question": "What is the Strogg unit described as?",
       "options": [
-        "Strogg's leader",
-        "Oppressor unit",
-        "recon drone",
-        "neurocyte"
+        "Oppressor",
+        "Infiltrator",
+        "Recon Drone",
+        "Leader"
+      ],
+      "correct": 1
+    },
+    {
+      "question": "What is Peeker identified as?",
+      "options": [
+        "Strogg's main weapon",
+        "Strogg's transport",
+        "Strogg's recon drone",
+        "Strogg's leader"
       ],
       "correct": 2
     },
     {
-      "question": "What is the most important substance for the Strogg according to the text?",
-      "options": ["Neurocyte", "Stroyent", "Makron", "Peeker"],
-      "correct": 1
+      "question": "What substance is contained in the vial?",
+      "options": [
+        "Stronk",
+        "Strogg",
+        "Stroger",
+        "Stroyent"
+      ],
+      "correct": 3
     }
   ]
 }
