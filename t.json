@@ -1,27 +1,52 @@
 {
   "questions": [
     {
-      "question": "What is the primary purpose of a Promise in JavaScript?",
+      "question": "In the Quake series, what is the name of the protagonist who battles through various dimensions?",
       "options": [
-        "To handle asynchronous operations and their eventual completion or failure",
-        "To declare variables with block scope",
-        "To create new HTML elements dynamically",
-        "To perform mathematical calculations with high precision"
+        "Ranger",
+        "Doomguy",
+        "Master Chief",
+        "Gordon Freeman"
       ],
       "correct": 0
     },
     {
-      "question": "Which method is called on a Promise when you want to handle a successfully resolved value?",
-      "options": [".then()", ".catch()", ".finally()", ".resolve()"],
+      "question": "Which entity is often considered the main antagonist in the original Quake game?",
+      "options": [
+        "Shub-Niggurath",
+        "Cthulhu",
+        "The Icon of Sin",
+        "GLaDOS"
+      ],
       "correct": 0
     },
     {
-      "question": "What does the .catch() method handle in a Promise chain?",
+      "question": "What is the primary setting for the conflicts in Quake lore?",
       "options": [
-        "Rejected promises and thrown errors",
-        "Only network connection errors",
-        "The final result after both success and failure",
-        "Synchronous code execution errors"
+        "Alternate dimensions",
+        "Post-apocalyptic Earth",
+        "Medieval fantasy world",
+        "Futuristic space stations"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "Which faction in Quake is known for its technological and military prowess?",
+      "options": [
+        "The Strogg",
+        "The Combine",
+        "The Covenant",
+        "The Borg"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "In Quake lore, what artifact is central to the dimensional rifts and conflicts?",
+      "options": [
+        "The Slipgate",
+        "The Tesseract",
+        "The Infinity Gauntlet",
+        "The Philosopher's Stone"
       ],
       "correct": 0
     }

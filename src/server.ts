@@ -28,7 +28,7 @@ app.post('/questions', async (req: Request, res:Response) => {
         }
 
         const result = await generateQuestions(input, questions);
-        res.json({ questions: result });
+        res.json({ questions: result })
     }
     catch (err)
     {

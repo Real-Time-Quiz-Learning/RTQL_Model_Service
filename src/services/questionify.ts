@@ -24,10 +24,10 @@ export async function generateQuestions(
 
 CRITICAL REQUIREMENTS:
 - Output ONLY raw JSON, no markdown, no code blocks, no backticks
-- Use this exact structure: {"questions": [{"question": "...", "options": ["A", "B", "C", "D"], "correct": 0}]}
-- The "correct" field is the index (0-3) of the correct option
-- Vary which option is correct across questions
-- Avoid questions starting with "What is the primary purpose of"
+- Use this exact structure: {"questions": [{"question": "...", "options": ["A", "B", "C", "D"], "correct": 0}]} 
+- The "correct" field is the index (0-3) of the correct option 
+- Which index is chosen as correct is random for each question, multiple questions should almost always have different option indexes be correct.
+- Nevr start a question with "What is the primary purpose of"
 
 INPUT TEXT:
 ${input}`;
@@ -49,9 +49,21 @@ ${input}`;
     }
 
     let cleanedResponse = response.trim();
+    
     if (cleanedResponse.startsWith('```')) {
-        cleanedResponse = cleanedResponse.replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```\s*$/, '');
+        const lines = cleanedResponse.split('\n');
+        lines.shift(); 
+        cleanedResponse = lines.join('\n');
     }
+    
+
+    if (cleanedResponse.endsWith('```')) {
+        const lines = cleanedResponse.split('\n');
+        lines.pop(); 
+        cleanedResponse = lines.join('\n');
+    }
+    
+    cleanedResponse = cleanedResponse.trim();
 
     const parsed = JSON.parse(cleanedResponse);
     return parsed.questions;
