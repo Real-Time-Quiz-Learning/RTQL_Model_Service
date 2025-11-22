@@ -1,8 +1,8 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { generateQuestions } from './services/questionify';
-import fs from 'fs';
+import multer from 'multer';
+import { generateQuestions, generateQuestionsFromImage } from './services/questionify';
 
 dotenv.config();
 
@@ -12,6 +12,13 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+        fileSize: 10 * 1024 * 1024
+    }
+});
+
 app.get('/', (req: Request, res: Response) => {
     res.json({
         service: 'RTQL model service',
@@ -19,22 +26,33 @@ app.get('/', (req: Request, res: Response) => {
     });
 });
 
-app.post('/questions', async (req: Request, res:Response) => {
+app.post('/questions', upload.single('image'), async (req: Request, res: Response) => {
     try {
-        const { input, questions } = req.body;
+        const questions = parseInt(req.body.questions) || 4;
 
-        if (!input || typeof input !== 'string') 
-        {
-            return res.status(400).send('input required.');
+        if (req.file) {
+            console.log(`Processing image: ${req.file.originalname}`);
+            const result = await generateQuestionsFromImage(req.file.buffer, questions);
+            return res.json({ questions: result });
+        } 
+        else if (req.body.input) {
+            const { input } = req.body;
+            if (typeof input !== 'string') {
+                return res.status(400).send('input must be a string');
+            }
+            const result = await generateQuestions(input, questions);
+            return res.json({ questions: result });
+        } 
+        else {
+            return res.status(400).send('No input provided');
         }
-
-        const result = await generateQuestions(input, questions);
-        res.json({ questions: result });
     }
-    catch (err)
-    {
-        console.error('error generation questions:', err);
-        res.status(500).send('error generation questions')
+    catch (err: any) {
+        console.error('error generating questions:', err);
+        if (err.message?.includes('Ollama')) {
+            return res.status(503).json({ error: 'Vision service unavailable' });
+        }
+        return res.status(500).send('error generating questions');
     }
 });
 

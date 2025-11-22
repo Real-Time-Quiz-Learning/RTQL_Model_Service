@@ -1,5 +1,6 @@
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
+import { VisionClient } from './vision-client';
 
 dotenv.config();
 
@@ -8,6 +9,8 @@ const client = new OpenAI({
     apiKey: key,
     baseURL: 'https://api.deepseek.com'
 });
+
+const visionClient = new VisionClient();
 
 export interface MCQuestion {
     question: string;
@@ -53,4 +56,19 @@ ${input}`;
 
     const parsed = JSON.parse(response);
     return parsed.questions;
+}
+
+export async function generateQuestionsFromImage(
+    imageBuffer: Buffer,
+    questions: number
+): Promise<MCQuestion[]> {
+    const visionResult = await visionClient.extractImage(imageBuffer);
+
+    if (!visionResult.text || visionResult.text.trim().length < 20) {
+        throw new Error('nothing meaningful to extract');
+    }
+
+    console.log(`extracted ${visionResult.text.length} chars in ${visionResult.processingTimeMs}ms`);
+
+    return generateQuestions(visionResult.text, questions);
 }
